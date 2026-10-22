@@ -590,6 +590,17 @@ function init(){
 		stage.update();
 	}
 
+	window.cheatBlackjack = {
+        ready: () => Boolean(player.fundsText.text),
+        getFunds: () => Number(player.funds),
+        setFunds(value) {
+            if (game.inProgress || player.betted || player.dealt) throw new Error('Finish the hand before setting funds.');
+            player.funds = value;
+            player.chips = game.balanceChips(value);
+            player.fundsText.update();
+            game.addChips();
+        }
+    };
 	game.startScreen();
 
 }
